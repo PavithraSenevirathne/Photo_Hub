@@ -19,24 +19,6 @@ public class GalleryController {
     @Autowired
     private GalleryService galleryService;
 
-//    @PostMapping("/save")
-//    public String addGallery(@RequestParam("photoName") String photoName,
-//                             @RequestParam("photographerName") String photographerName,
-//                             @RequestParam("cameraBrand") String cameraBrand,
-//                             @RequestParam("description") String description,
-//                             @RequestParam("image") MultipartFile imageFile) {
-//
-//        // Create GalleryDTO from individual parameters
-//        GalleryDTO galleryDTO = new GalleryDTO();
-//        galleryDTO.setPhotoName(photoName);
-//        galleryDTO.setPhotographerName(photographerName);
-//        galleryDTO.setCameraBrand(cameraBrand);
-//        galleryDTO.setDescription(description);
-//
-//        // Call service to save gallery with image
-//        return galleryService.addGalleryWithImage(galleryDTO, imageFile);
-//    }
-
 
     @PostMapping("/save")
     public String addGallery(@RequestParam("photoName") String photoName,
@@ -59,6 +41,11 @@ public class GalleryController {
     @GetMapping("/all")
     public List<GalleryDTO> getAllGalleries() {
         return galleryService.getAllGalleries();
+    }
+
+    @DeleteMapping("/delete/{galleryId}")
+    public String deleteGallery(@PathVariable Integer galleryId) {
+        return galleryService.deleteGallery(galleryId);
     }
 
 

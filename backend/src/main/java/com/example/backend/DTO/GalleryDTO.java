@@ -19,5 +19,6 @@ public class GalleryDTO {
     private List<byte[]> imageData;
 
     public void setImages(List<byte[]> imageDataList) {
+
     }
 }
