@@ -5,4 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GalleryRepo extends JpaRepository<Gallery,Integer> {
 
+    boolean findByPhotoName(String photoName);
+
+    boolean existsByPhotoName(String photoName);
 }
