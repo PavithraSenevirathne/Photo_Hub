@@ -115,5 +115,50 @@ public class GalleryServiceIMPL implements GalleryService {
         return "Gallery '" + photoName + "' has been successfully deleted.";
     }
 
+    @Override
+    public String updateGalleryWithImages(Integer galleryId, GalleryDTO galleryDTO, MultipartFile[] imageFiles) {
+        // Check if the gallery exists
+        Gallery existingGallery = galleryRepo.findById(galleryId)
+                .orElseThrow(() -> new RuntimeException("Gallery not found with ID: " + galleryId));
+
+        // Update gallery details - only update fields that are not null in the DTO
+        if (galleryDTO.getPhotoName() != null) {
+            existingGallery.setPhotoName(galleryDTO.getPhotoName());
+        }
+        if (galleryDTO.getPhotographerName() != null) {
+            existingGallery.setPhotographerName(galleryDTO.getPhotographerName());
+        }
+        if (galleryDTO.getCameraBrand() != null) {
+            existingGallery.setCameraBrand(galleryDTO.getCameraBrand());
+        }
+        if (galleryDTO.getDescription() != null) {
+            existingGallery.setDescription(galleryDTO.getDescription());
+        }
+
+        // Update images if new ones are provided
+        if (imageFiles != null && imageFiles.length > 0) {
+            try {
+                // First clear existing images if needed (or implement your merge strategy)
+                existingGallery.getImages().clear();
+
+                // Add new images
+                for (MultipartFile imageFile : imageFiles) {
+                    if (!imageFile.isEmpty()) {
+                        GalleryImage galleryImage = new GalleryImage();
+                        galleryImage.setImageData(imageFile.getBytes());
+                        existingGallery.addImage(galleryImage);
+                    }
+                }
+            } catch (IOException e) {
+                return "Failed to update images: " + e.getMessage();
+            }
+        }
+
+        // Save the updated gallery
+        galleryRepo.save(existingGallery);
+
+        return "Gallery '" + galleryDTO.getPhotoName() + "' updated successfully.";
+    }
+
 
 }

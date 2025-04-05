@@ -23,4 +23,7 @@ public class GalleryImage {
     @ManyToOne
     @JoinColumn(name = "gallery_id")
     private Gallery gallery;
+
+    public void setImageData(byte[] bytes) {
+    }
 }

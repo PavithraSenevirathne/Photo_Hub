@@ -16,4 +16,6 @@ public interface GalleryService {
     List<GalleryDTO> getAllGalleries();
 
     String deleteGallery(Integer galleryId);
+
+    String updateGalleryWithImages(Integer galleryId, GalleryDTO galleryDTO, MultipartFile[] imageFiles);
 }
