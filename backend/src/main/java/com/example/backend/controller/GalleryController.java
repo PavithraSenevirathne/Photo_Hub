@@ -48,5 +48,24 @@ public class GalleryController {
         return galleryService.deleteGallery(galleryId);
     }
 
+    @PutMapping("/update/{galleryId}")
+    public String updateGallery(@PathVariable Integer galleryId,
+                                @RequestParam(value = "photoName", required = false) String photoName,
+                                @RequestParam(value = "photographerName", required = false) String photographerName,
+                                @RequestParam(value = "cameraBrand", required = false) String cameraBrand,
+                                @RequestParam(value = "description", required = false) String description,
+                                @RequestParam(value = "images", required = false) MultipartFile[] imageFiles) {
+
+        // Create GalleryDTO from request parameters
+        GalleryDTO galleryDTO = new GalleryDTO();
+        galleryDTO.setPhotoName(photoName);
+        galleryDTO.setPhotographerName(photographerName);
+        galleryDTO.setCameraBrand(cameraBrand);
+        galleryDTO.setDescription(description);
+
+        // Call service to update gallery with optional images
+        return galleryService.updateGalleryWithImages(galleryId, galleryDTO, imageFiles);
+    }
+
 
 }
