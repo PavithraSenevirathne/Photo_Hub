@@ -67,33 +67,6 @@ public class GalleryServiceIMPL implements GalleryService {
     }
 
 
-//    @Override
-//    public List<GalleryDTO> getAllGalleries() {
-//        List<Gallery> galleries = galleryRepo.findAll();
-//        return galleries.stream()
-//                .map(this::convertToDTO)
-//                .collect(Collectors.toList());
-//    }
-//
-//    // Helper method to convert Gallery entity to GalleryDTO
-//    private GalleryDTO convertToDTO(Gallery gallery) {
-//        GalleryDTO dto = new GalleryDTO();
-//        dto.setGalleryId(gallery.getGalleryId());
-//        dto.setPhotoName(gallery.getPhotoName());
-//        dto.setPhotographerName(gallery.getPhotographerName());
-//        dto.setCameraBrand(gallery.getCameraBrand());
-//        dto.setDescription(gallery.getDescription());
-//
-//        // Handle the images - decide if you want to return the image data in the DTO
-//        // This might cause performance issues with large galleries
-//        if (gallery.getImages() != null && !gallery.getImages().isEmpty()) {
-//            dto.setImageData(gallery.getImages().stream()
-//                    .map(GalleryImage::getData)
-//                    .collect(Collectors.toList()));
-//        }
-//
-//        return dto;
-//    }
 
     @Override
     public List<GalleryDTO> getAllGalleries() {
@@ -127,39 +100,20 @@ public class GalleryServiceIMPL implements GalleryService {
         return galleryDTOList;
     }
 
+    @Override
+    public String deleteGallery(Integer galleryId) {
+        // Check if gallery exists
+        Gallery gallery = galleryRepo.findById(galleryId)
+                .orElseThrow(() -> new RuntimeException("Gallery not found with id: " + galleryId));
 
-//    @Override
-//    public String addGalleryWithImage(GalleryDTO galleryDTO, MultipartFile imageFile) {
-//        // Validate image file
-//        if (imageFile == null || imageFile.isEmpty()) {
-//            return "Image file is required.";
-//        }
-//
-//        // Check if photo name already exists (optional validation - remove if not needed)
-////        if (galleryRepo.findByPhotoName(galleryDTO.getPhotoName()) != null) {
-////            return "Photo name already exists. Please use a different name.";
-////        }
-//
-//        // Map GalleryDTO to Gallery entity
-//        Gallery gallery = new Gallery();
-//        gallery.setPhotoName(galleryDTO.getPhotoName());
-//        gallery.setPhotographerName(galleryDTO.getPhotographerName());
-//        gallery.setCameraBrand(galleryDTO.getCameraBrand());
-//        gallery.setDescription(galleryDTO.getDescription());
-//
-//        // Save image as a byte array
-//        try {
-//            List<byte[]> images = new ArrayList<>();
-//            images.add(imageFile.getBytes());
-//            gallery.setImages(images);
-//        } catch (IOException e) {
-//            return "Failed to process image: " + e.getMessage();
-//        }
-//
-//        // Save the gallery entity to the database
-//        galleryRepo.save(gallery);
-//        return "Gallery '" + galleryDTO.getPhotoName() + "' saved successfully with image.";
-//    }
+        // Get gallery name for the response message
+        String photoName = gallery.getPhotoName();
+
+        // Delete the gallery (this will cascade to delete associated images due to our relationship setup)
+        galleryRepo.deleteById(galleryId);
+
+        return "Gallery '" + photoName + "' has been successfully deleted.";
+    }
 
 
 }
