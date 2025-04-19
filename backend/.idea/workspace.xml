@@ -20,9 +20,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2vIXs63ktIriIwtA75JVOAZn0m8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -34,6 +34,10 @@
     "git-widget-placeholder": "collabarative__project",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/LAPTOP/Documents/GitHub/Photo_Hub/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -64,6 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1743833766485</updated>
       <workItem from="1743833767859" duration="281000" />
+      <workItem from="1743834314297" duration="355000" />
     </task>
     <servers />
   </component>
