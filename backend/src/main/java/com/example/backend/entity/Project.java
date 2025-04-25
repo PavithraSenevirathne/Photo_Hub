@@ -1,8 +1,17 @@
-package com.example.backend.service.model;
-
-import javax.persistence.*;
+package com.example.backend.entity;
+ 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Project {
@@ -10,31 +19,33 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String name;
     private String description;
-    
-    @OneToMany(mappedBy = "project")
-    private Set<Task> tasks = new HashSet<>();
 
-    @ManyToMany(mappedBy = "projects")
-    private Set<User> users = new HashSet<>();
-
+    // Link to users in the project
     @ManyToMany
     @JoinTable(
-        name = "project_feedbacks",
+        name = "project_user",
         joinColumns = @JoinColumn(name = "project_id"),
-        inverseJoinColumns = @JoinColumn(name = "feedback_id")
+        inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<Feedback> feedbacks = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    // Link to tasks
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private Set<Task> tasks = new HashSet<>();
+
+    public Project() {}
+
+    public Project(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    // Getters and setters
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -53,14 +64,6 @@ public class Project {
         this.description = description;
     }
 
-    public Set<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Set<Task> tasks) {
-        this.tasks = tasks;
-    }
-
     public Set<User> getUsers() {
         return users;
     }
@@ -69,11 +72,11 @@ public class Project {
         this.users = users;
     }
 
-    public Set<Feedback> getFeedbacks() {
-        return feedbacks;
+    public Set<Task> getTasks() {
+        return tasks;
     }
 
-    public void setFeedbacks(Set<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }

@@ -1,8 +1,15 @@
-package com.example.backend.service.model;
-
-import javax.persistence.*;
+package com.example.backend.entity;
+ 
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class User {
@@ -10,33 +17,26 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String name;
     private String email;
-    
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
-    @ManyToMany
-    @JoinTable(
-        name = "user_projects",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "project_id")
-    )
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    @ManyToMany(mappedBy = "users")
     private Set<Project> projects = new HashSet<>();
 
-    // Enum for user roles
-    public enum Role {
-        PHOTOGRAPHER, EDITOR, REVIEWER
+    public User() {}
+
+    public User(String name, String email, UserRole role) {
+        this.name = name;
+        this.email = email;
+        this.role = role;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -55,11 +55,11 @@ public class User {
         this.email = email;
     }
 
-    public Role getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 

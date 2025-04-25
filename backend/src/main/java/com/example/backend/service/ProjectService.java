@@ -1,51 +1,41 @@
-package com.example.backend.service.service;
-
-import com.example.backend.service.model.Project;
-import com.example.backend.service.repository.ProjectRepository;
+package com.example.backend.service;
+ 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.entity.Project;
+import com.example.backend.repo.ProjectRepository;
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
 
     @Autowired
-    private ProjectRepository projectRepository;
+    private ProjectRepository projectRepo;
 
-    // Create a new project
-    public Project createProject(Project project) {
-        return projectRepository.save(project);
-    }
-
-    // Get all projects
     public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+        return projectRepo.findAll();
     }
 
-    // Get a project by ID
-    public Project getProjectById(Long id) {
-        return projectRepository.findById(id).orElse(null);
+    public Optional<Project> getProjectById(Long id) {
+        return projectRepo.findById(id);
     }
 
-    // Get a project by name
-    public Project getProjectByName(String name) {
-        return projectRepository.findByName(name);
+    public Project createProject(Project project) {
+        return projectRepo.save(project);
     }
 
-    // Delete a project
-    public void deleteProject(Long id) {
-        projectRepository.deleteById(id);
-    }
-
-    // Update project details
     public Project updateProject(Long id, Project updatedProject) {
-        Project project = projectRepository.findById(id).orElse(null);
-        if (project != null) {
+        return projectRepo.findById(id).map(project -> {
             project.setName(updatedProject.getName());
             project.setDescription(updatedProject.getDescription());
-            return projectRepository.save(project);
-        }
-        return null;
+            return projectRepo.save(project);
+        }).orElse(null);
+    }
+
+    public void deleteProject(Long id) {
+        projectRepo.deleteById(id);
     }
 }

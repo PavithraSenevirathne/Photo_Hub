@@ -1,8 +1,8 @@
-package com.example.backend.service.repository;
+package com.example.backend.repo;
 
-import com.example.backend.service.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> { 
-    User findByEmail(String email);
+import com.example.backend.entity.User;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 }

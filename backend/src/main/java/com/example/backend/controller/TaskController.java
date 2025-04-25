@@ -1,50 +1,41 @@
-package com.example.backend.service.controller;
-
-import com.example.backend.service.model.Task;
-import com.example.backend.service.service.TaskService;
+package com.example.backend.controller;
+ 
+import com.example.backend.entity.Task;
+import com.example.backend.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tasks")
+@CrossOrigin(origins = "*")
 public class TaskController {
 
     @Autowired
     private TaskService taskService;
 
-    // Get all tasks for a project
-    @GetMapping("/project/{projectId}")
-    public List<Task> getTasksByProject(@PathVariable Long projectId) {
-        return taskService.getTasksByProject(projectId);
+    @GetMapping
+    public List<Task> getAllTasks() {
+        return taskService.getAllTasks();
     }
 
-    // Get all tasks assigned to a user
-    @GetMapping("/user/{userId}")
-    public List<Task> getTasksByUser(@PathVariable Long userId) {
-        return taskService.getTasksByUser(userId);
+    @GetMapping("/{id}")
+    public Optional<Task> getTaskById(@PathVariable Long id) {
+        return taskService.getTaskById(id);
     }
 
-    // Get tasks by status
-    @GetMapping("/status/{status}")
-    public List<Task> getTasksByStatus(@PathVariable Task.Status status) {
-        return taskService.getTasksByStatus(status);
-    }
-
-    // Create a new task
     @PostMapping
     public Task createTask(@RequestBody Task task) {
         return taskService.createTask(task);
     }
 
-    // Update an existing task
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        return taskService.updateTask(id, updatedTask);
+    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+        return taskService.updateTask(id, task);
     }
 
-    // Delete a task
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);

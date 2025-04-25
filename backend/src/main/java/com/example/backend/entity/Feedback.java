@@ -1,7 +1,12 @@
-package com.example.backend.service.model;
+package com.example.backend.entity;
+import java.time.LocalDateTime;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Feedback {
@@ -10,53 +15,54 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
+    private String message;
 
-    private LocalDate createdDate;
+    private LocalDateTime timestamp;
 
+    // Who gave the feedback
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "sender_id")
+    private User sender;
 
+    // Project related to feedback
     @ManyToOne
-    @JoinColumn(name = "project_id", nullable = false)
+    @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
+    public Feedback() {}
 
-    // Getters and Setters
+    public Feedback(String message, LocalDateTime timestamp, User sender, Project project) {
+        this.message = message;
+        this.timestamp = timestamp;
+        this.sender = sender;
+        this.project = project;
+    }
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getMessage() {
+        return message;
     }
 
-    public String getContent() {
-        return content;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
-        this.createdDate = createdDate;
+    public User getSender() {
+        return sender;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setSender(User sender) {
+        this.sender = sender;
     }
 
     public Project getProject() {
@@ -65,13 +71,5 @@ public class Feedback {
 
     public void setProject(Project project) {
         this.project = project;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
     }
 }

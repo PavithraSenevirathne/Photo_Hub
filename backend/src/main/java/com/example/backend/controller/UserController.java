@@ -1,44 +1,41 @@
-package com.example.backend.service.controller;
-
-import com.example.backend.service.model.User;
-import com.example.backend.service.service.UserService;
+package com.example.backend.controller;
+ 
+import com.example.backend.entity.User;
+import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "*")  // Allow frontend access
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    // Get all users
     @GetMapping
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // Get a user by ID
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
+    public Optional<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    // Create a new user
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    // Update user's role
-    @PutMapping("/{id}/role")
-    public User updateUserRole(@PathVariable Long id, @RequestBody User.Role newRole) {
-        return userService.updateUserRole(id, newRole);
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
-    // Delete a user
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
