@@ -32,6 +32,11 @@ const ProgressUpdateList = ({ updates, onDelete, onEdit, onUpdate }) => {
       return;
     }
 
+    /*if (!description || descrion.trim().length < 10) {
+      toast.error("Description must be at least 10 characters long ❗");
+      return;
+    }*/
+
     if (!type) {
       toast.error("Please select a type ❗");
       return;
