@@ -40,7 +40,7 @@ public class CommentController {
         return ResponseEntity.ok(commentDTOs);
     }
     
-    // Get replies for a comment
+     
     @GetMapping("/{commentId}/replies")
     public ResponseEntity<List<CommentDTO>> getCommentReplies(@PathVariable String commentId) {
         List<Comment> replies = commentService.getCommentReplies(commentId);
