@@ -21,7 +21,7 @@ const CourseCard = ({ course, onEdit, onDelete }) => {
     toast.success("Learning plan deleted.", {
       position: "top-right",
       autoClose: 2000,
-      style: { backgroundColor: "#f87171", color: "#450a0a" },
+      style: { backgroundColor: "#f87171", color: "#450a1a" },
     });
     onDelete(course.id);
   };
