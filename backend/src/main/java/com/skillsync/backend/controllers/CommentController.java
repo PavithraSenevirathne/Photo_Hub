@@ -18,7 +18,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
     
-    // Create a new comment
+
     @PostMapping
     public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO commentDTO) {
         Comment comment = commentService.createComment(
@@ -30,7 +30,7 @@ public class CommentController {
         return new ResponseEntity<>(convertToDTO(comment), HttpStatus.CREATED);
     }
     
-    // Get all comments for a post
+   
     @GetMapping("/post/{postId}")
     public ResponseEntity<List<CommentDTO>> getPostComments(@PathVariable String postId) {
         List<Comment> comments = commentService.getPostComments(postId);
