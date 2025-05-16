@@ -45,6 +45,12 @@ const ProgressUpdateForm = ({ onSubmit, initialData }) => {
       return;
     }
 
+    /*if (!completedDate) {
+      toast.error("Completed date is required ❗");
+      setIsSubmitting(false);
+      return;
+    }*/
+
     const selectedDate = new Date(completedDate);
     const today = new Date();
     today.setHours(0, 0, 0, 0);

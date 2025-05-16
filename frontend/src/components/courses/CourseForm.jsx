@@ -202,7 +202,7 @@ const CourseForm = ({ onSubmit, selected }) => {
           name="category"
           value={form.category}
           onChange={handleChange}
-          placeholder="e.g. Frontend, Backend"
+          placeholder="e.g. Wildlife, Fashion"
           className="w-full px-4 py-2 border border-gray-600 rounded-md focus:ring-purple-400 focus:outline-none bg-gray-800 text-gray-100"
         />
       </div>
